@@ -1,0 +1,9 @@
+#hover-card:hover {
+  background-color: #f5f5f5;
+  transition: 0.3s all ease-in;
+  cursor: pointer;
+}
+
+#card__space {
+  margin: 30px 0px;
+}

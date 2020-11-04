@@ -1,0 +1,27 @@
+@import url("./fonts.css");
+@import url("./poster.css");
+@import url("./details.css");
+@import url("./favorit.css");
+
+body {
+  scroll-behavior: smooth;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+a {
+  cursor: pointer !important;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+#team-name {
+  cursor: pointer;
+}
+
+#team-name:hover {
+  text-decoration: underline;
+}
