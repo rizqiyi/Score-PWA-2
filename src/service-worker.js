@@ -56,26 +56,29 @@ self.addEventListener("install", function (event) {
   );
 });
 
-self.addEventListener("fetch", function (event) {
-  if (
-    event.request.url.indexOf(base_url) > -1 ||
-    event.request.url.indexOf(base_url2) > -1
-  ) {
-    event.respondWith(
-      caches.open(CACHE_NAME).then(function (cache) {
-        return fetch(event.request).then(function (response) {
-          cache.put(event.request.url, response.clone());
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches
+      .match(event.request, { ignoreSearch: true })
+      .then(function (response) {
+        if (response) {
+          return response;
+        }
+        var requestToCache = event.request.clone();
+
+        return fetch(requestToCache).then(function (response) {
+          if (!response) {
+            return response;
+          }
+
+          var responseToCache = response.clone();
+          caches.open(CACHE_NAME).then(function (cache) {
+            cache.put(requestToCache, responseToCache);
+          });
           return response;
         });
       })
-    );
-  } else {
-    event.respondWith(
-      caches.match(event.request).then(function (response) {
-        return response || fetch(event.request);
-      })
-    );
-  }
+  );
 });
 
 self.addEventListener("activate", function (event) {
