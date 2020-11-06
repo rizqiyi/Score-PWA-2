@@ -101,6 +101,7 @@ self.addEventListener("push", (event) => {
 
   let options = {
     body,
+    icon: "./assets/images/score.png",
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
