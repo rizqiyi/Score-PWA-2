@@ -11,7 +11,7 @@ webpush.setVapidDetails(
   vapidKeys.privateKey
 );
 
-const pushsubscription = {
+const pushSubscription = {
   endpoint:
     "https://fcm.googleapis.com/fcm/send/cPeJc4NTNpc:APA91bHLlPr20RWtRHT3ZpkSLRosHVETSxmI4W3WBk3oxTOHRg7sCWxU572X10ZUObTZ1bSbSbP3weMejv3F_nd_f4y_AMxu9Ejg4qi6ARryI6GoqiJBoh3OVSU2ufripg9Fwbw0etFT",
   keys: {

@@ -18,7 +18,7 @@ const getSavedTeam = () => {
                         data-website="${team.website}">delete</i>
                 </a>
                     <div class="card-content black-text center-align" id="hover-card">
-                        <img class="responsive-img" width="100px" src="${team.crestUrl}" />
+                        <img class="responsive-img" alt="Logo ${team.name}" width="100px" src="${team.crestUrl}" />
                         <h6 class="truncate card-title">${team.name}</h6>
                         <p class="left-align">${team.venue}</p>
                         <p class="left-align">${team.website}</p>

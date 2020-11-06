@@ -8,12 +8,11 @@ const getDetailsTeam = () => {
     caches.match(baseURLgetTeamByID(urlParamsId)).then((res) => {
       if (res) {
         res.json().then((data) => {
-          console.log(data);
           let contentDetailTeam = "";
           contentDetailTeam += `
                   <div class="control__image__details">
                       <img class="materialboxed control__image" width="300"
-                          src="${data.crestUrl}" data-caption="Bayern Munchen">
+                          src="${data.crestUrl}" alt="Logo ${data.name}" data-caption="Bayern Munchen">
                   </div>
                   <div class="text-details">
                       <hr>
@@ -52,7 +51,7 @@ const getDetailsTeam = () => {
     contentDetailTeam += `
           <div class="control__image__details">
               <img class="materialboxed control__image" width="300"
-                  src="${data.crestUrl}" data-caption="Bayern Munchen">
+                  src="${data.crestUrl}" alt="Logo ${data.name}" data-caption="Bayern Munchen">
           </div>
           <div class="text-details">
               <hr>

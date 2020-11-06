@@ -8,7 +8,6 @@ const registerServiceWorker = () => {
   return navigator.serviceWorker
     .register("/service-worker.js")
     .then((registration) => {
-      console.log(`Success`);
       return registration;
     })
     .catch((err) => {

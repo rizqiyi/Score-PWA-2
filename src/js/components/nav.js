@@ -1,5 +1,5 @@
 import { loadPage } from "../data/loadPage.js";
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const elems = document.querySelectorAll(".sidenav");
 
   M.Sidenav.init(elems);
@@ -16,22 +16,20 @@ document.addEventListener("DOMContentLoaded", function () {
       if (this.readyState === 4) {
         if (this.status !== 200) return;
 
-        document.querySelectorAll(".topnav, .sidenav").forEach(function (elm) {
+        document.querySelectorAll(".topnav, .sidenav").forEach((elm) => {
           elm.innerHTML = xhttp.responseText;
         });
 
-        document
-          .querySelectorAll(".sidenav a, .topnav a")
-          .forEach(function (elm) {
-            elm.addEventListener("click", function (event) {
-              const sideNav = document.querySelector(".sidenav");
+        document.querySelectorAll(".sidenav a, .topnav a").forEach((elm) => {
+          elm.addEventListener("click", (event) => {
+            const sideNav = document.querySelector(".sidenav");
 
-              M.Sidenav.getInstance(sideNav).close();
+            M.Sidenav.getInstance(sideNav).close();
 
-              page = event.target.getAttribute("href").substr(1);
-              loadPage(page);
-            });
+            page = event.target.getAttribute("href").substr(1);
+            loadPage(page);
           });
+        });
       }
     };
     xhttp.open("GET", "../../components/nav.html", true);

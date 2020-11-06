@@ -7,14 +7,15 @@ const getDataTable = () => {
     caches.match(baseURLStandings).then((res) => {
       if (res) {
         res.json().then((data) => {
-          console.log(data);
           let articlesHTML = "";
           data.standings[0].table.forEach((a, idx) => {
             articlesHTML += `
           <tr>
               <td class="center-align">${++idx}</td>
               <td class="left-align" id="team-name">
-              <img src="${a.team.crestUrl}" width="35px" height="20px">
+              <img src="${a.team.crestUrl}" alt="Tim ${
+              a.team.name
+            }" width="35px" height="20px">
                 ${a.team.name}
               </td>
               <td class="left-align">${a.playedGames}</td>
@@ -41,7 +42,9 @@ const getDataTable = () => {
           <tr>
               <td class="center-align">${++idx}</td>
               <td class="left-align" id="team-name">
-              <img src="${a.team.crestUrl}" width="35px" height="20px">
+              <img src="${a.team.crestUrl}" alt="Tim ${
+        a.team.name
+      }" width="35px" height="20px">
                 ${a.team.name}
               </td>
               <td class="left-align">${a.playedGames}</td>
@@ -132,7 +135,7 @@ const getSchedule = () => {
           document.getElementById("linear-progress").style.display = "none";
           data.matches.map((team) => {
             scheduledTeams += `
-                <li class="collection-item">
+            <li class="collection-item">
                     <h6 class="center-align" style="margin: 30px 0px;">${moment(
                       team.utcDate
                     )
@@ -143,13 +146,23 @@ const getSchedule = () => {
                     </div>
                     <div class="content-team-schedule center center-align control-center">
                         <div class="home-team left-align" style="width: 115px;">
+                            <img width="50px" class="responsive-img center-align" alt="Home Team ${
+                              team.homeTeam.name
+                            }" src="https://crests.football-data.org/${
+              team.homeTeam.id
+            }.svg" />
                             <p>${team.homeTeam.name}</p>
                         </div>
                         <div class="away-team right-align" style="width: 115px;">
+                            <img width="50px" class="responsive-img center-align" alt="Home Team ${
+                              team.awayTeam.name
+                            }" src="https://crests.football-data.org/${
+              team.awayTeam.id
+            }.svg" />
                             <p>${team.awayTeam.name}</p>
                         </div>
                     </div>
-                </li>
+            </li>
               `;
           });
 
@@ -165,7 +178,6 @@ const getSchedule = () => {
     let scheduledTeams = "";
 
     data.matches.map((team) => {
-      console.log(team);
       scheduledTeams += `
         <li class="collection-item">
             <h6 class="center-align" style="margin: 30px 0px;">${moment(
@@ -178,15 +190,19 @@ const getSchedule = () => {
             </div>
             <div class="content-team-schedule center center-align control-center">
                 <div class="home-team left-align" style="width: 115px;">
-                    <img width="50px" class="responsive-img center-align" src="https://crests.football-data.org/${
-                      team.homeTeam.id
-                    }.svg" />
+                    <img width="50px" class="responsive-img center-align" alt="Home Team ${
+                      team.homeTeam.name
+                    }" src="https://crests.football-data.org/${
+        team.homeTeam.id
+      }.svg" />
                     <p>${team.homeTeam.name}</p>
                 </div>
                 <div class="away-team right-align" style="width: 115px;">
-                    <img width="50px" class="responsive-img center-align" src="https://crests.football-data.org/${
-                      team.awayTeam.id
-                    }.svg" />
+                    <img width="50px" class="responsive-img center-align" alt="Home Team ${
+                      team.awayTeam.name
+                    }" src="https://crests.football-data.org/${
+        team.awayTeam.id
+      }.svg" />
                     <p>${team.awayTeam.name}</p>
                 </div>
             </div>

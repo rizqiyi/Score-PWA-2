@@ -7,7 +7,7 @@ var urlsToCache = [
   "/details.js",
   "/index.js",
   "/manifest.json",
-  "/idb-2.1.3/lib/idb.js",
+  "/js/main/idb.js",
   "/components/footer.html",
   "/components/nav.html",
   "/js/api/api.js",
@@ -45,12 +45,9 @@ var urlsToCache = [
   "/js/notifications/push-notification.js",
 ];
 
-let base_url = "https://api.football-data.org/";
-let base_url2 = "https://crests.football-data.org";
-
-self.addEventListener("install", function (event) {
+self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
+    caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(urlsToCache);
     })
   );
@@ -58,36 +55,33 @@ self.addEventListener("install", function (event) {
 
 self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches
-      .match(event.request, { ignoreSearch: true })
-      .then(function (response) {
-        if (response) {
+    caches.match(event.request, { ignoreSearch: true }).then((response) => {
+      if (response) {
+        return response;
+      }
+      let requestToCache = event.request.clone();
+
+      return fetch(requestToCache).then((response) => {
+        if (!response) {
           return response;
         }
-        var requestToCache = event.request.clone();
 
-        return fetch(requestToCache).then(function (response) {
-          if (!response) {
-            return response;
-          }
-
-          var responseToCache = response.clone();
-          caches.open(CACHE_NAME).then(function (cache) {
-            cache.put(requestToCache, responseToCache);
-          });
-          return response;
+        let responseToCache = response.clone();
+        caches.open(CACHE_NAME).then((cache) => {
+          cache.put(requestToCache, responseToCache);
         });
-      })
+        return response;
+      });
+    })
   );
 });
 
-self.addEventListener("activate", function (event) {
+self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then(function (cacheNames) {
+    caches.keys().then((cacheNames) => {
       return Promise.all(
-        cacheNames.map(function (cacheName) {
+        cacheNames.map((cacheName) => {
           if (cacheName != CACHE_NAME) {
-            console.log("ServiceWorker: cache " + cacheName + " dihapus");
             return caches.delete(cacheName);
           }
         })
