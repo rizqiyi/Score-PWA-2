@@ -10,7 +10,7 @@ const saveForLater = (item) => {
     .then(function (db) {
       let tx = db.transaction("details-team", "readwrite");
       let store = tx.objectStore("details-team");
-      store.add(item);
+      store.put(item);
       return tx.complete;
     })
     .then(() => {
@@ -24,8 +24,8 @@ const saveForLater = (item) => {
         });
       }
     })
-    .catch(() => {
-      M.toast({ html: "Anda sudah menambahkan item ini." });
+    .catch((err) => {
+      console.error(err);
     });
 };
 

@@ -1,11 +1,11 @@
-var webpush = require("web-push");
+const webPush = require("web-push");
 const vapidKeys = {
   publicKey:
     "BB94Ey55ANnjYwIw0h-KE5jMQ6G24VBr_JI0ci4hIfqNhA88X86CQRy5PHiA3AtJPj3rSzQZddIRRXUYmsjD6MI",
   privateKey: "cFCaHvarQq9058-x_H98Hn-Fju0NXu7gt5K_1a3HyQs",
 };
 
-webpush.setVapidDetails(
+webPush.setVapidDetails(
   "mailto:example@yourdomain.org",
   vapidKeys.publicKey,
   vapidKeys.privateKey
