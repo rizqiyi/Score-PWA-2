@@ -45,12 +45,6 @@ const getDetailsTeam = () => {
                   `;
 
           document.querySelector(".team-details").innerHTML = contentDetailTeam;
-
-          getDataByID(data.id).then((data) =>
-            data
-              ? document.querySelector(".btn-add").classList.add("disabled")
-              : clickedButton()
-          );
         });
       }
     });
