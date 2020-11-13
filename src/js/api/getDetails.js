@@ -1,9 +1,10 @@
 import { getData } from "./fetchAPI.js";
 import { baseURLgetTeamByID } from "./baseURL.js";
-import { saveForLater } from "../idb/idb.js";
+import { saveForLater, getDataByID } from "../idb/idb.js";
 
 const getDetailsTeam = () => {
   let urlParamsId = new URLSearchParams(window.location.search).get("id");
+
   if ("caches" in window) {
     caches.match(baseURLgetTeamByID(urlParamsId)).then((res) => {
       if (res) {
@@ -45,7 +46,11 @@ const getDetailsTeam = () => {
 
           document.querySelector(".team-details").innerHTML = contentDetailTeam;
 
-          clickedButton();
+          getDataByID(data.id).then((data) =>
+            data
+              ? document.querySelector(".btn-add").classList.add("disabled")
+              : clickedButton()
+          );
         });
       }
     });
@@ -73,7 +78,7 @@ const getDetailsTeam = () => {
                       data-venue="${data.venue}" 
                       data-website="${data.website}"
                       id="font__control"  
-                      class="waves-effect waves-light btn btn-small orange darken-3 white-text inherit-text btn-add">
+                      class="waves-effect waves-light btn btn-small orange darken-3 white-text inherit-text btn-add" id="btn-add">
                     <i class="material-icons left">add</i>
                     Add To Favourite
                   </a>
@@ -89,13 +94,19 @@ const getDetailsTeam = () => {
           `;
 
     document.querySelector(".team-details").innerHTML = contentDetailTeam;
-    clickedButton();
+
+    getDataByID(data.id).then((data) =>
+      data
+        ? document.querySelector(".btn-add").classList.add("disabled")
+        : clickedButton()
+    );
   });
 };
 
 const clickedButton = () => {
   Array.from(document.getElementsByClassName("btn-add")).forEach((elm) => {
     elm.addEventListener("click", (event) => {
+      setTimeout(() => elm.classList.add("disabled"), 1000);
       saveForLater({
         id: parseInt(event.target.getAttribute("data-id")),
         name: event.target.getAttribute("data-name"),

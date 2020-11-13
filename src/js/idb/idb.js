@@ -19,7 +19,7 @@ const saveForLater = (item) => {
         navigator.serviceWorker.ready.then((registration) => {
           registration.showNotification("Score Football Website", {
             body: `Anda menambahkan tim ${item.name} ke favorit.`,
-            icon: "../../assets/images/score.png",
+            icon: "../../assets/images/score-512x512.png",
           });
         });
       }
@@ -45,6 +45,21 @@ const getAll = () => {
   });
 };
 
+const getDataByID = (id) => {
+  return new Promise((resolve) => {
+    dbPromised
+      .then((db) => {
+        let tx = db.transaction("details-team", "readonly");
+        let store = tx.objectStore("details-team");
+
+        return store.get(id);
+      })
+      .then((teams) => {
+        resolve(teams);
+      });
+  });
+};
+
 const deleteById = (id, name) => {
   return new Promise(() => {
     dbPromised
@@ -60,7 +75,7 @@ const deleteById = (id, name) => {
           navigator.serviceWorker.ready.then((registration) => {
             registration.showNotification("Score Football Website", {
               body: `Berhasil menghapus tim ${name} dari favorit.`,
-              icon: "../../assets/images/score.png",
+              icon: "../../assets/images/score-512x512.png",
             });
           });
         }
@@ -68,4 +83,4 @@ const deleteById = (id, name) => {
   });
 };
 
-export { saveForLater, getAll, deleteById };
+export { saveForLater, getAll, deleteById, getDataByID };
