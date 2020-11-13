@@ -12,7 +12,12 @@ const getDetailsTeam = () => {
           contentDetailTeam += `
                   <div class="control__image__details">
                       <img class="materialboxed control__image" width="300"
-                          src="${data.crestUrl}" alt="Logo ${data.name}" data-caption="Bayern Munchen">
+                          src="${data.crestUrl.replace(
+                            /^http:\/\//i,
+                            "https://"
+                          )}" alt="Logo ${
+            data.name
+          }" data-caption="Bayern Munchen">
                   </div>
                   <div class="text-details">
                       <hr>
@@ -22,7 +27,8 @@ const getDetailsTeam = () => {
                               data-id="${data.id}" 
                               data-name="${data.name}" 
                               data-venue="${data.venue}" 
-                              data-website="${data.website}" 
+                              data-website="${data.website}"
+                              id="font__control" 
                               class="waves-effect waves-light btn btn-small orange darken-3 white-text inherit-text btn-add">
                           <i class="material-icons left">add</i>
                           Add To Favourite</a>
@@ -51,7 +57,10 @@ const getDetailsTeam = () => {
     contentDetailTeam += `
           <div class="control__image__details">
               <img class="materialboxed control__image" width="300"
-                  src="${data.crestUrl}" alt="Logo ${data.name}" data-caption="Bayern Munchen">
+                  src="${data.crestUrl.replace(
+                    /^http:\/\//i,
+                    "https://"
+                  )}" alt="Logo ${data.name}" data-caption="Bayern Munchen">
           </div>
           <div class="text-details">
               <hr>
@@ -62,7 +71,8 @@ const getDetailsTeam = () => {
                       data-crestUrl="${data.crestUrl}" 
                       data-name="${data.name}" 
                       data-venue="${data.venue}" 
-                      data-website="${data.website}"  
+                      data-website="${data.website}"
+                      id="font__control"  
                       class="waves-effect waves-light btn btn-small orange darken-3 white-text inherit-text btn-add">
                     <i class="material-icons left">add</i>
                     Add To Favourite

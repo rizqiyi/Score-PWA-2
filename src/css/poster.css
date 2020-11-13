@@ -20,7 +20,9 @@
 }
 
 #content__plus {
-  font-family: "Light" !important;
+  font-family: "Noto Sans JP", sans-serif;
+  font-display: swap;
+  font-weight: 300 !important;
 }
 
 #centering__element {
@@ -38,7 +40,9 @@
   margin-top: 40px;
   text-transform: inherit;
   font-size: 16px;
-  font-family: "Bold";
+  font-family: "Noto Sans JP", sans-serif;
+  font-display: swap;
+  font-weight: 700;
   border-radius: 30px;
 }
 
@@ -56,7 +60,9 @@
 }
 
 #footer-sentence {
-  font-family: "Light" !important;
+  font-family: "Noto Sans JP", sans-serif;
+  font-display: swap;
+  font-weight: 300 !important;
 }
 
 .control-center {

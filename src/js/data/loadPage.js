@@ -2,21 +2,32 @@ import { getDataTable, getTeams, getSchedule } from "../api/api.js";
 import { getSavedTeam } from "../api/getSaved.js";
 
 const loadPage = (page) => {
-  let xhttp = new XMLHttpRequest();
+  const xhttp = new XMLHttpRequest();
 
   xhttp.onreadystatechange = function () {
     if (this.readyState === 4) {
       let content = document.querySelector("#body-content");
 
-      page === "klasemen"
-        ? getDataTable()
-        : page === "tim"
-        ? getTeams()
-        : page === "jadwal"
-        ? getSchedule()
-        : page === "favorit"
-        ? getSavedTeam()
-        : null;
+      switch (page) {
+        case "klasemen":
+          getDataTable();
+          break;
+
+        case "tim":
+          getTeams();
+          break;
+
+        case "jadwal":
+          getSchedule();
+          break;
+
+        case "favorit":
+          getSavedTeam();
+          break;
+
+        default:
+          break;
+      }
 
       this.status === 200
         ? (content.innerHTML = xhttp.responseText)

@@ -1,22 +1,4 @@
 @font-face {
-  src: url("../assets/fonts/NotoSansJP/NotoSansJP-Regular.otf");
-  font-family: Regular;
-  font-display: swap;
-}
-
-@font-face {
-  src: url("../assets/fonts/NotoSansJP/NotoSansJP-Bold.otf");
-  font-family: Bold;
-  font-display: swap;
-}
-
-@font-face {
-  src: url("../assets/fonts/NotoSansJP/NotoSansJP-Light.otf");
-  font-family: Light;
-  font-display: swap;
-}
-
-@font-face {
   font-family: "Material Icons";
   font-style: normal;
   font-weight: 400;
@@ -59,17 +41,23 @@ h4,
 h5,
 h6,
 p {
-  font-family: "Regular";
+  font-family: "Noto Sans JP", sans-serif;
+  font-display: swap;
 }
 
 #nav-menu {
-  font-family: "Bold";
+  font-family: "Noto Sans JP", sans-serif;
+  font-display: swap;
+  font-weight: 700;
 }
 
 #logo {
-  font-family: "Regular";
+  font-family: "Noto Sans JP", sans-serif;
+  font-display: swap;
 }
 
 a {
-  font-family: "Light";
+  font-family: "Noto Sans JP", sans-serif;
+  font-display: swap;
+  font-weight: 300;
 }

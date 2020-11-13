@@ -13,9 +13,10 @@ const getDataTable = () => {
           <tr>
               <td class="center-align">${++idx}</td>
               <td class="left-align" id="team-name">
-              <img src="${a.team.crestUrl}" alt="Tim ${
-              a.team.name
-            }" width="35px" height="20px">
+              <img src="${a.team.crestUrl.replace(
+                /^http:\/\//i,
+                "https://"
+              )}" alt="Tim ${a.team.name}" width="35px" height="20px">
                 ${a.team.name}
               </td>
               <td class="left-align">${a.playedGames}</td>
@@ -42,9 +43,10 @@ const getDataTable = () => {
           <tr>
               <td class="center-align">${++idx}</td>
               <td class="left-align" id="team-name">
-              <img src="${a.team.crestUrl}" alt="Tim ${
-        a.team.name
-      }" width="35px" height="20px">
+              <img src="${a.team.crestUrl.replace(
+                /^http:\/\//i,
+                "https://"
+              )}" alt="Tim ${a.team.name}" width="35px" height="20px">
                 ${a.team.name}
               </td>
               <td class="left-align">${a.playedGames}</td>
@@ -69,7 +71,12 @@ const getTeams = () => {
           data.teams.map((team) => {
             teamCollapsible += `
                 <li>
-                    <div class="collapsible-header"><img src="${team.crestUrl}" style="margin-right: 10px" width="30px" height="auto">${team.name}</div>
+                    <div class="collapsible-header"><img src="${team.crestUrl.replace(
+                      /^http:\/\//i,
+                      "https://"
+                    )}" style="margin-right: 10px" width="30px" height="auto" alt="logo ${
+              team.name
+            }" >${team.name}</div>
                     <div class="collapsible-body">
                       <p>
                         Warna tim : ${team.clubColors}
@@ -83,7 +90,9 @@ const getTeams = () => {
                       <p>
                         Website : ${team.website}
                       </p>
-                      <a class="orange-text text-darken-2" href="../../details.html?id=${team.id}">See Details</a>
+                      <a class="orange-text text-darken-2" href="../../details.html?id=${
+                        team.id
+                      }">See Details</a>
                     </div>
                 </li>
               `;
@@ -103,7 +112,12 @@ const getTeams = () => {
     data.teams.map((team) => {
       teamCollapsible += `
         <li>
-            <div class="collapsible-header"><img src="${team.crestUrl}" style="margin-right: 10px" width="30px" height="auto">${team.name}</div>
+            <div class="collapsible-header"><img src="${team.crestUrl.replace(
+              /^http:\/\//i,
+              "https://"
+            )}" style="margin-right: 10px" width="30px" height="auto" alt="logo ${
+        team.name
+      }">${team.name}</div>
             <div class="collapsible-body">
               <p>
                 Warna tim : ${team.clubColors}
@@ -117,7 +131,9 @@ const getTeams = () => {
               <p>
                 Website : ${team.website}
               </p>
-              <a class="orange-text text-darken-2" href="../../details.html?id=${team.id}">See Details</a>
+              <a class="orange-text text-darken-2" href="../../details.html?id=${
+                team.id
+              }">See Details</a>
             </div>
         </li>
       `;

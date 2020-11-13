@@ -9,9 +9,16 @@
   padding: 30px 0px;
 }
 
+#font__control {
+  font-family: "Noto Sans JP", sans-serif;
+  font-display: swap;
+}
+
 .inherit-text {
   text-transform: inherit;
-  font-family: "Bold";
+  font-family: "Noto Sans JP", sans-serif;
+  font-weight: 700;
+  font-display: swap;
   border-radius: 20px;
 }
 

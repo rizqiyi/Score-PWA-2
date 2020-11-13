@@ -2,7 +2,7 @@ import { getDetailsTeam } from "../api/getDetails.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const loadDetailPage = () => {
-    let xhttp = new XMLHttpRequest();
+    const xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
       if (this.readyState === 4) {

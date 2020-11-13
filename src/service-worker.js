@@ -1,94 +1,121 @@
-const CACHE_NAME = "score-v2";
-var urlsToCache = [
-  "/",
-  "/index.html",
-  "/details.html",
-  "/service-worker.js",
-  "/details.js",
-  "/index.js",
-  "/manifest.json",
-  "/js/main/idb.js",
-  "/components/footer.html",
-  "/components/nav.html",
-  "/js/api/api.js",
-  "/js/api/baseURL.js",
-  "/js/api/fetchAPI.js",
-  "/js/api/getDetails.js",
-  "/js/api/getSaved.js",
-  "/js/components/footer.js",
-  "/js/components/nav.js",
-  "/js/data/loadDetailPage.js",
-  "/js/data/loadPage.js",
-  "/js/idb/idb.js",
-  "/js/main/aos.js",
-  "/js/main/materialize.min.js",
-  "/js/main/moment.js",
-  "/css/fonts.css",
-  "/css/poster.css",
-  "/css/index.css",
-  "/css/aos.css",
-  "/css/favorit.css",
-  "/css/details.css",
-  "/css/materialize.min.css",
-  "/pages/details-team.html",
-  "/pages/favorit.html",
-  "/pages/jadwal.html",
-  "/pages/klasemen.html",
-  "/pages/tim.html",
-  "/assets/images/score.png",
-  "/assets/fonts/NotoSansJP/NotoSansJP-Bold.otf",
-  "/assets/fonts/NotoSansJP/NotoSansJP-Light.otf",
-  "/assets/fonts/NotoSansJP/NotoSansJP-Regular.otf",
-  "/assets/icons/MaterialIcons-Regular.ttf",
-  "/assets/icons/MaterialIcons-Regular.woff",
-  "/assets/icons/MaterialIcons-Regular.woff2",
-  "/js/notifications/push-notification.js",
-];
+importScripts(
+  "https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js"
+);
 
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(urlsToCache);
+if (workbox) {
+  console.log("Workbox Siap");
+  workbox.precaching.precacheAndRoute(
+    [
+      { url: "/", revision: 1 },
+      { url: "/index.html", revision: 1 },
+      { url: "/details.html", revision: 1 },
+      { url: "/service-worker.js", revision: 1 },
+      { url: "/details.js", revision: 1 },
+      { url: "/index.js", revision: 1 },
+      { url: "/manifest.json", revision: 1 },
+      { url: "/js/main/idb.js", revision: 1 },
+      { url: "/components/footer.html", revision: 1 },
+      { url: "/components/nav.html", revision: 1 },
+      { url: "/js/api/api.js", revision: 1 },
+      { url: "/js/api/baseURL.js", revision: 1 },
+      { url: "/js/api/fetchAPI.js", revision: 1 },
+      { url: "/js/api/getDetails.js", revision: 1 },
+      { url: "/js/api/getSaved.js", revision: 1 },
+      { url: "/js/components/footer.js", revision: 1 },
+      { url: "/js/components/nav.js", revision: 1 },
+      { url: "/js/data/loadDetailPage.js", revision: 1 },
+      { url: "/js/data/loadPage.js", revision: 1 },
+      { url: "/js/idb/idb.js", revision: 1 },
+      { url: "/js/main/aos.js", revision: 1 },
+      { url: "/js/main/materialize.min.js", revision: 1 },
+      { url: "/js/main/moment.js", revision: 1 },
+      { url: "/css/fonts.css", revision: 1 },
+      { url: "/css/poster.css", revision: 1 },
+      { url: "/css/index.css", revision: 1 },
+      { url: "/css/aos.css", revision: 1 },
+      { url: "/css/favorit.css", revision: 1 },
+      { url: "/css/details.css", revision: 1 },
+      { url: "/css/materialize.min.css", revision: 1 },
+      { url: "/pages/details-team.html", revision: 1 },
+      { url: "/pages/favorit.html", revision: 1 },
+      { url: "/pages/jadwal.html", revision: 1 },
+      { url: "/pages/klasemen.html", revision: 1 },
+      { url: "/pages/tim.html", revision: 1 },
+      { url: "/assets/images/score-72x72.png", revision: 1 },
+      { url: "/assets/images/score-512x512.png", revision: 1 },
+      { url: "/assets/images/score-192x192.png", revision: 1 },
+    ],
+    {
+      ignoreUrlParametersMatching: [/.*/],
+    }
+  );
+
+  workbox.routing.registerRoute(
+    /.*(?:png|gif|jpg|jpeg|svg|ico)$/,
+    workbox.strategies.cacheFirst({
+      cacheName: "images-cache",
+      plugins: [
+        new workbox.cacheableResponse.Plugin({
+          statuses: [0, 200],
+        }),
+        new workbox.expiration.Plugin({
+          maxEntries: 100,
+          maxAgeSeconds: 30 * 24 * 60 * 60,
+        }),
+      ],
     })
   );
-});
 
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request, { ignoreSearch: true }).then((response) => {
-      if (response) {
-        return response;
-      }
-      let requestToCache = event.request.clone();
+  workbox.routing.registerRoute(
+    new RegExp("https://api.football-data.org/v2/"),
+    workbox.strategies.staleWhileRevalidate()
+  );
 
-      return fetch(requestToCache).then((response) => {
-        if (!response) {
-          return response;
-        }
-
-        let responseToCache = response.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(requestToCache, responseToCache);
-        });
-        return response;
-      });
+  workbox.routing.registerRoute(
+    /\.(?:js|css)$/,
+    new workbox.strategies.StaleWhileRevalidate({
+      cacheName: "static-resources",
     })
   );
-});
 
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((cacheName) => {
-          if (cacheName != CACHE_NAME) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
+  workbox.routing.registerRoute(
+    /.*(?:googleapis|gstatic)\.com/,
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: "google-fonts-stylesheets",
     })
   );
-});
+
+  workbox.routing.registerRoute(
+    /^https:\/\/fonts\.gstatic\.com/,
+    workbox.strategies.cacheFirst({
+      cacheName: "google-fonts-webfonts",
+      plugins: [
+        new workbox.cacheableResponse.Plugin({
+          statuses: [0, 200],
+        }),
+        new workbox.expiration.Plugin({
+          maxAgeSeconds: 60 * 60 * 24 * 365,
+          maxEntries: 30,
+        }),
+      ],
+    })
+  );
+
+  workbox.routing.registerRoute(
+    new RegExp("/pages/"),
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: "pages",
+    })
+  );
+  workbox.routing.registerRoute(
+    new RegExp("/js/api/"),
+    workbox.strategies.staleWhileRevalidate({
+      cacheName: "js-api",
+    })
+  );
+} else {
+  console.log("Workbox gagal");
+}
 
 self.addEventListener("push", (event) => {
   let body;
